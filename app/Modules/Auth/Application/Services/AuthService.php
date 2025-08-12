@@ -2,21 +2,30 @@
 
 namespace App\Modules\Auth\Application\Services;
 
-use App\Modules\Auth\Domain\Repositories\UserRepositoryInterface;
+use App\Modules\Auth\Infra\Eloquent\UserModel;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class AuthService
 {
-    public function __construct(protected UserRepositoryInterface $users) {}
-
-    public function login(array $credentials)
+    public function loginWithRole(array $credentials)
     {
-        // TODO: implement login logic
-        return ['message' => 'Login successful'];
-    }
+        $user = UserModel::where('email', $credentials['email'])
+            ->where('user_type', $credentials['required_role'])
+            ->first();
 
-    public function register(array $data)
-    {
-        // TODO: implement register logic
-        return ['message' => 'Register successful'];
+        if (!$user || !Hash::check($credentials['password'], $user->password_hash)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect or role not allowed.'],
+            ]);
+        }
+
+       $token = $user->createToken('auth_token')->plainTextToken;
+
+        return [
+            'user'  => $user,
+            'token' => $token,
+            'role'  => $user->user_type
+        ];
     }
 }

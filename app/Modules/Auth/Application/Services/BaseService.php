@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Modules\Auth\Application\Services;
 
-use App\Repositories\BaseRepository;
+use App\Modules\Auth\Domain\Repositories\BaseRepository;
 use Exception;
 use Faker\Extension\Extension;
 use Illuminate\Support\Facades\DB;
