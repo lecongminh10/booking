@@ -8,11 +8,6 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 class UserModel extends Authenticatable
 {
     use HasFactory;
-
-    protected static function newFactory()
-    {
-        return \App\Modules\Auth\Database\Factories\UserFactory::new();
-    }
     protected $table = 'users';
 
     protected $fillable = [
