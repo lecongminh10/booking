@@ -13,8 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-         UserEntity::factory()->count(20)->create([
-            'password' => Hash::make('12345678')
-        ]);
+        $this->call(UserSeeder::class);
     }
 }

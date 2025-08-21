@@ -62,4 +62,8 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
             updated_at:            Carbon::parse($model->updated_at)
         );
     }
+    public function findModelById(int $id): UserModel
+    {
+        return $this->model->findOrFail($id);
+    }
 }

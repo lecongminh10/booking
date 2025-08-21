@@ -9,6 +9,7 @@ use App\Modules\Auth\Http\Controllers\StoreManagerAuthController;
 Route::prefix('super-admin')->group(function () {
     Route::post('login', [SuperAdminAuthController::class, 'login']);
     Route::post('logout', [SuperAdminAuthController::class, 'logout'])->middleware('auth:api');
+    Route::post('register', [SuperAdminAuthController::class, 'register']);
 });
 
 Route::prefix('club-admin')->group(function () {
